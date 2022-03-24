@@ -41,19 +41,22 @@ def process_log_file(cur, filepath):
     """
     
     # open log file
-    df = pd.read_json(filepath, lines=True)
+    df = pd.read_json(filepath, lines=True, convert_dates=['ts'])
 
     # filter by NextSong action
     df = df[df['page']=='NextSong'].copy()
 
     # convert timestamp column to datetime
-    t = pd.DataFrame(df['ts'].apply(lambda x: pd.to_datetime(x)))
+    #t = pd.to_datetime(df['ts'])
+    t = df['ts']
     
     # insert time data records
-    time_data = [t.ts, t.ts.dt.hour, t.ts.dt.day, t.ts.dt.isocalendar().week, 
-                 t.ts.dt.month, t.ts.dt.year, t.ts.dt.weekday]
-    column_labels = ['timestamp', 'hour', 'day', 'week_of_year', 
+    time_data = [t, t.dt.hour, t.dt.day, t.dt.weekofyear, 
+                 t.dt.month, t.dt.year, t.dt.weekday]
+    column_labels = ['timestamp','hour', 'day', 'week_of_year', 
                      'month', 'year', 'weekday']
+    
+    # create time dataframe from time_data
     time_df = pd.DataFrame(dict(zip(column_labels, time_data)))
 
     for i, row in time_df.iterrows():
@@ -74,12 +77,12 @@ def process_log_file(cur, filepath):
         results = cur.fetchone()
         
         if results:
-            songid, artistid, duration = results
+            songid, artistid = results
         else:
-            songid, artistid, duration = None, None, None
+            songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = [index, row.ts, row.userId, row.level, songid, 
+        songplay_data = [row.ts, row.userId, row.level, songid, 
                          artistid, row.sessionId, row.location, row.userAgent]
         cur.execute(songplay_table_insert, songplay_data)
 
@@ -124,7 +127,7 @@ def main():
 
     process_data(cur, conn, filepath='data/song_data', func=process_song_file)
     process_data(cur, conn, filepath='data/log_data', func=process_log_file)
-
+    
     conn.close()
 
 
