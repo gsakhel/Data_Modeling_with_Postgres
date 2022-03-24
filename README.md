@@ -15,19 +15,6 @@ Song and log files are extracted, transformed, and loaded into postgres using th
 * sql_queries.py - stores our CREATE, INSERT, and SELECT SQL queries
 * README.md - basic instructions and useful links.
 
-
-
-# QUESTIONS
-In etl.ipnb under "Process log_data" #3 there are multiple ways to create the timed_df. Enumerating is fast with zip-dict a close second. Is there a prefered way to do this step?
-
-Why are only certain fields for the tables constrained to NOT NULL? For example, why shouldn't artist_id be NOT NULL in the songs table While user_id is NOT NULL for songplays table.
-
-When using test.py, why am I getting the error: "[WARNING] Type 'double precision' may not be an appropriate data type for column 'start_time' in the 'songplays' table."? My SQL query designates the start_time column as a timestamp.
-
-For "Insert data using the COPY command to bulk insert log files instead of using INSERT on one row at a time", how do I read the log .json files and copy them into a table? Do I need to convert to .csv as mentioned here? https://stackoverflow.com/questions/66930940/how-do-i-copy-import-a-json-file-into-postgres
-
-
-
 # Useful Links:
 
 Install Psycopg2
