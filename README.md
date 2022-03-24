@@ -13,6 +13,7 @@ Song and log files are extracted, transformed, and loaded into postgres using th
 
 * etl.ipnb - Used for interactively creating the ETL pipeline
 * sql_queries.py - stores our CREATE, INSERT, and SELECT SQL queries
+* sparkify_schema_relationships.png - Visual representation of the relationships in our schema
 * README.md - basic instructions and useful links.
 
 # Useful Links:
