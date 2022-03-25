@@ -7,12 +7,12 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
-    """
-    Formats our song file data and inserts it into the database.
+    """Formats our song file data and inserts it into the database.
     
-    Parameters:
+    Args:
     cur (psycopg2.extensions.cursor): Postgres cursor
     filepath (str): path to song file
+
     """
     
     # open song file
@@ -32,12 +32,12 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
-    """
-    Formats our logfile data and inserts it into the database.
+    """Formats our logfile data and inserts it into the database.
         
-    Parameters:
+    Args:
     cur (psycopg2.extensions.cursor): Postgres cursor
     filepath (str): Path to log file
+    
     """
     
     # open log file
@@ -88,15 +88,15 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
-    """
-    Grabs the actual filenames containing our data and passes them 
+    """Grabs the actual filenames containing our data and passes them 
     for further processing into the database.
         
-    Parameters:
-    cur (psycopg2.extensions.cursor): Postgres cursor
-    conn (psycopg2.extensions.connection): Postgres connection
-    filepath (str): Path to folder containing song or log files
-    func (function): Function for processing the song or log files
+    Args:
+        cur (psycopg2.extensions.cursor): Postgres cursor
+        conn (psycopg2.extensions.connection): Postgres connection
+        filepath (str): Path to folder containing song or log files
+        func (function): Function for processing the song or log files
+        
     """
     
     # get all files matching extension from directory
@@ -118,9 +118,7 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
-    """
-    Main function, connects to postgress database and initiates data processing.
-    """
+    """Main function, connects to postgress database and initiates data processing."""
     
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
